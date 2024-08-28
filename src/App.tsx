@@ -34,7 +34,6 @@ const Row = ({
 
 function App() {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [direction, setDirection] = useState(Math.floor(Math.random() * 2));
   const [chosenPayoutOdds, setChosenPayoutOdds] = useState(
     Math.floor(Math.random() * 5)
   );
@@ -51,7 +50,6 @@ function App() {
     const payout = payoutOdds * betAmount;
     const isCorrect = payout === +inputValue;
 
-    setDirection(Math.floor(Math.random() * 2));
     setResult({ input: inputValue, payout, payoutOdds, betAmount, isCorrect });
     setBetAmount(Math.floor(Math.random() * 20) + 1);
     setChosenPayoutOdds(Math.floor(Math.random() * 5));
@@ -61,10 +59,7 @@ function App() {
 
   return (
     <Flex align="center" direction="column" pt="20">
-      <Flex
-        direction={direction ? "row" : "row-reverse"}
-        className={css({ fontSize: "2xl", fontWeight: "bold" })}
-      >
+      <Flex className={css({ fontSize: "2xl", fontWeight: "bold" })}>
         <div>{PAYOUT_ODDS[chosenPayoutOdds]}</div>*<div>{betAmount}</div>
       </Flex>
 
