@@ -1,8 +1,8 @@
 import { ReactNode, useRef, useState } from "react";
 import { css } from "../styled-system/css";
-import { Flex } from "../styled-system/jsx";
-
-const PAYOUT_ODDS = [5, 8, 11, 17, 35];
+import { Box, Flex } from "../styled-system/jsx";
+import { BET_AMOUNT, PAYOUT_ODDS } from "./config/payoutOdds";
+import { getWeightedRandom } from "./utils/getWeightedRandom";
 
 interface Result {
   input: string;
@@ -21,52 +21,44 @@ const Row = ({
   isCorrect?: boolean;
   children: ReactNode;
 }) => {
-  const color = isCorrect === undefined ? "black" : isCorrect ? "green" : "red";
+  const color = isCorrect === undefined ? "white" : isCorrect ? "green" : "red";
   return (
     <Flex justify="space-between" align="center" mb="2">
-      <div className={css({ fontSize: "lg", fontWeight: "bold" })}>{name}</div>
-      <div>
-        <span className={css({ color })}>{children}</span>{" "}
-      </div>
+      <Box fontSize="lg" fontWeight="bold">
+        {name}
+      </Box>
+      <Box color={color}>{children}</Box>
     </Flex>
   );
 };
 
 function App() {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [chosenPayoutOdds, setChosenPayoutOdds] = useState(
-    Math.floor(Math.random() * 5)
-  );
-  const [betAmount, setBetAmount] = useState(
-    Math.floor(Math.random() * 20) + 1
-  );
-
-  const [inputValue, setInputValue] = useState<string | undefined>("");
+  const [payoutOdds, setPayoutOdds] = useState(getWeightedRandom(PAYOUT_ODDS));
+  const [betAmount, setBetAmount] = useState(getWeightedRandom(BET_AMOUNT));
   const [result, setResult] = useState<Result | undefined>(undefined);
 
   const onSubmit = () => {
-    if (!inputRef.current || !inputValue) return;
-    const payoutOdds = PAYOUT_ODDS[chosenPayoutOdds];
+    const input = inputRef.current?.value;
+    if (!input) return;
     const payout = payoutOdds * betAmount;
-    const isCorrect = payout === +inputValue;
+    const isCorrect = payout === +input;
 
-    setResult({ input: inputValue, payout, payoutOdds, betAmount, isCorrect });
-    setBetAmount(Math.floor(Math.random() * 20) + 1);
-    setChosenPayoutOdds(Math.floor(Math.random() * 5));
+    setResult({ input, payout, payoutOdds, betAmount, isCorrect });
+    setBetAmount(getWeightedRandom(BET_AMOUNT));
+    setPayoutOdds(getWeightedRandom(PAYOUT_ODDS));
     inputRef.current.value = "";
-    setInputValue("");
   };
 
   return (
     <Flex align="center" direction="column" pt="20">
-      <Flex className={css({ fontSize: "2xl", fontWeight: "bold" })}>
-        <div>{PAYOUT_ODDS[chosenPayoutOdds]}</div>*<div>{betAmount}</div>
+      <Flex fontSize="2xl" fontWeight="bold">
+        <div>{payoutOdds}</div>*<div>{betAmount}</div>
       </Flex>
 
       <input
         ref={inputRef}
         type="number"
-        onChange={(e) => setInputValue(e.currentTarget.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") onSubmit();
         }}
@@ -88,7 +80,7 @@ function App() {
       </button>
 
       {result && (
-        <div className={css({ maxW: "200px", w: "100%" })}>
+        <Box maxW="200px" w="100%">
           <Row name="Answer" isCorrect={result.isCorrect}>
             <b>{result.input}</b>
           </Row>
@@ -100,7 +92,7 @@ function App() {
               <b>{result.payout}</b>
             </Row>
           )}
-        </div>
+        </Box>
       )}
     </Flex>
   );
