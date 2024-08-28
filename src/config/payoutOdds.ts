@@ -1,0 +1,30 @@
+export const PAYOUT_ODDS: Array<{ value: number; weight: number }> = [
+  { value: 5, weight: 1 },
+  { value: 8, weight: 2 },
+  { value: 11, weight: 4 },
+  { value: 17, weight: 10 },
+  { value: 35, weight: 14 },
+];
+
+export const BET_AMOUNT: Array<{ value: number; weight: number }> = [
+  { value: 1, weight: 1 },
+  { value: 2, weight: 1 },
+  { value: 3, weight: 2 },
+  { value: 4, weight: 2 },
+  { value: 5, weight: 2 },
+  { value: 6, weight: 3 },
+  { value: 7, weight: 3 },
+  { value: 8, weight: 3 },
+  { value: 9, weight: 3 },
+  { value: 10, weight: 1 },
+  { value: 11, weight: 8 },
+  { value: 12, weight: 9 },
+  { value: 13, weight: 9 },
+  { value: 14, weight: 9 },
+  { value: 15, weight: 9 },
+  { value: 16, weight: 9 },
+  { value: 17, weight: 9 },
+  { value: 18, weight: 9 },
+  { value: 19, weight: 9 },
+  { value: 20, weight: 4 },
+];
