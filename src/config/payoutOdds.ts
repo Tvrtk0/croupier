@@ -4,7 +4,7 @@ export const PAYOUT_ODDS: Array<{ value: number; weight: number }> = [
   { value: 11, weight: 4 },
   { value: 17, weight: 10 },
   { value: 35, weight: 14 },
-];
+]
 
 export const BET_AMOUNT: Array<{ value: number; weight: number }> = [
   { value: 1, weight: 1 },
@@ -27,4 +27,4 @@ export const BET_AMOUNT: Array<{ value: number; weight: number }> = [
   { value: 18, weight: 9 },
   { value: 19, weight: 9 },
   { value: 20, weight: 4 },
-];
+]
